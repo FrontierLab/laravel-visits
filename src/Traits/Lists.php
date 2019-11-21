@@ -18,10 +18,10 @@ trait Lists
         $cacheKey = $this->keys->cache($limit, $isLow);
         $cachedList = $this->cachedList($limit, $cacheKey);
         $visitsIds = $this->getVisitsIds($limit, $this->keys->visits, $isLow);
-
-        if($visitsIds === $cachedList->pluck($this->keys->primary)->toArray() && ! $this->fresh) {
+        if ($visitsIds === $cachedList->pluck($this->keys->primary)->toArray() && ! $this->fresh) {
             return $cachedList;
         }
+
 
         return $this->freshList($cacheKey, $visitsIds);
     }
@@ -105,7 +105,7 @@ trait Lists
     {
         $range = $isLow ? 'zrange' : 'zrevrange';
 
-        return array_map('intval', $this->redis->$range($visitsKey, 0, $limit - 1));
+        return  $this->redis->$range($visitsKey, 0, $limit - 1);
     }
 
     /**
